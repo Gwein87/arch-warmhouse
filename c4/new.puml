@@ -1,0 +1,33 @@
+@startuml
+!include <C4/C4_Container>
+
+Person(usr, "Пользователь", "")
+Person(adm, "Администратор", "")
+
+System_Boundary(c1, "Smart Home"){
+    System(app, "Приложение")
+    System(mngt, "Управление устройствами")
+    System(heat, "Heat API")
+    System(lights, "Lights API")
+    System(doors, "Doors API")
+    System(gates, "Gates API")
+    System(cameras, "Cameras API")
+    SystemDb(pg, "PostgreSQL")
+}
+
+Rel(usr, app, "Проверяет и обновляет состояние датчиков", "HTTPS JSON")
+Rel(app, mngt, "Проверяет и обновляет состояние датчиков", "HTTPS JSON")
+Rel(adm, app, "Регистрирует датчики", "HTTPS JSON")
+Rel(app, mngt, "Регистрирует датчики", "HTTPS JSON")
+Rel(mngt, heat, "Регистрирует новые датчики и управляет состоянием текущих", "HTTPS JSON")
+Rel(mngt, lights, "Регистрирует новые датчики и управляет состоянием текущих", "HTTPS JSON")
+Rel(mngt, doors, "Регистрирует новые датчики и управляет состоянием текущих", "HTTPS JSON")
+Rel(mngt, gates, "Регистрирует новые датчики и управляет состоянием текущих", "HTTPS JSON")
+Rel(mngt, cameras, "Регистрирует новые датчики и управляет состоянием текущих", "HTTPS JSON")
+Rel(mngt, pg, "Читает и записывает данные", "SQL")
+Rel(heat, pg, "Читает и записывает данные", "SQL")
+Rel(lights, pg, "Читает и записывает данные", "SQL")
+Rel(doors, pg, "Читает и записывает данные", "SQL")
+Rel(gates, pg, "Читает и записывает данные", "SQL")
+Rel(cameras, pg, "Читает и записывает данные", "SQL")
+@enduml
